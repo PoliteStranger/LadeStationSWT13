@@ -23,7 +23,7 @@ namespace Ladeskab
         private IDisplay _display;          // Vis beskeder på displayet
         private int _oldId;
         private IDoor _door;
-
+        
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
