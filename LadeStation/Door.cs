@@ -16,13 +16,12 @@ namespace Ladeskab
     public interface IDoor
     {
         event EventHandler<DTDoorOpenCloseEvent> DoorChangedEvent;
-        //public void LockDoor();
-        //public void UnlockDoor();
+       
         public void OnDoorOpen();
         public void OnDoorClose();
 
-        public void DoorLock();
-        public void DoorUnLock();
+        public void LockDoor();
+        public void UnlockDoor();
     }
 
     public class Door:IDoor
@@ -57,7 +56,7 @@ namespace Ladeskab
             }
         }
 
-        public void DoorLock()
+        public void LockDoor()
         {
             if (doorstate == false && doorlock == false)
             {
@@ -65,7 +64,7 @@ namespace Ladeskab
             }
         }
 
-        public void DoorUnLock()
+        public void UnlockDoor()
         {
             if (doorlock == true && doorstate == false)
             {
