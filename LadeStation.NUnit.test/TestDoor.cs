@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace LadeStation.NUnit.test
 {
-    public class Tests
+    public class TestsDoor
     {
         private Door _uut;
         private Ladeskab.DTDoorOpenCloseEvent _doorOpenCloseEvent;
