@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-´//DEtte er en test om det er min branch
+//DEtte er en test om det er min branch
 
 namespace Ladeskab
 {
