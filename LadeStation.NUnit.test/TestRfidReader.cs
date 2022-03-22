@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace LadeStation.NUnit.test
 {
+    /*
     public class TestDoor
     {
         private Door _uut;
@@ -84,6 +85,6 @@ namespace LadeStation.NUnit.test
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
-
-    }
+    
+    }*/
 }
