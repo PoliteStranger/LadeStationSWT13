@@ -16,7 +16,7 @@ namespace LadeStation.NUnit.test
         }
 
         [Test]
-        public void DoorEventNotNull()
+        public void DisplayMessageFree()
         {
             _uut.DisplayGuideMessage(IDisplay.GuideMessages.Free);
             Assert.That(_uut.GuideStateMessage, Is.EqualTo(IDisplay.GuideMessages.Free));
