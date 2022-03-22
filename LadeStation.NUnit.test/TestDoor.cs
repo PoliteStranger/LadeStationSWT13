@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace LadeStation.NUnit.test
 {
-    public class Tests
+    public class TestDoor
     {
         private Door _uut;
         private Ladeskab.DTDoorOpenCloseEvent _doorOpenCloseEvent;
@@ -43,6 +43,23 @@ namespace LadeStation.NUnit.test
         }
 
         [Test]
+        public void DoorEventCheckCloseDefaultPositionEqualsNullReference()
+        {
+            _uut.OnDoorClose();
+            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
+        }
+
+        [Test]
+        public void DoorEventAfterLockAndUnlockEqualTrue()
+        {
+            _uut.DoorLock();
+            _uut.OnDoorOpen();
+            _uut.DoorUnLock();
+            _uut.OnDoorOpen();
+            Assert.That(_doorOpenCloseEvent.doorOpen, Is.True);
+        }
+
+        [Test]
         public void DoorEventMessageNotReceivedAfterLockedDoor()
         {
             _uut.DoorLock();
@@ -50,6 +67,25 @@ namespace LadeStation.NUnit.test
 
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
+
+        [Test]
+        public void DoorEventUnlockAndCloseEqualNullReference()
+        {
+            _uut.DoorUnLock();
+            _uut.OnDoorClose();
+
+            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
+        }
+
+        
+
+        [Test]
+        public void DoorEventCheckForUnlockStateEqualsNullReference()
+        {
+            _uut.DoorUnLock();
+            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
+        }
+
 
     }
 }
