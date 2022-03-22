@@ -41,7 +41,7 @@ namespace Ladeskab
 
         public void OnDoorOpen()
         {
-            if (doorlock == false)
+            if (doorlock == false && doorlock == false)
             {
                 DoorStateChanged(new DTDoorOpenCloseEvent { doorOpen = true });
                 doorstate = true;
@@ -50,7 +50,7 @@ namespace Ladeskab
 
         public void OnDoorClose()
         {
-            if (doorstate == true)
+            if (doorstate == true && doorlock == false)
             {
                 DoorStateChanged(new DTDoorOpenCloseEvent { doorOpen = false });
                 doorstate = false;
@@ -59,19 +59,17 @@ namespace Ladeskab
 
         public void DoorLock()
         {
-            if (doorstate == false)
+            if (doorstate == false && doorlock == false)
             {
                 doorlock = true;
-                Console.WriteLine("Døren er låst");
             }
         }
 
         public void DoorUnLock()
         {
-            if (doorlock == true)
+            if (doorlock == true && doorstate == false)
             {
                 doorlock = false;
-                Console.WriteLine("Døren er Ulåst");
             }
         }
 

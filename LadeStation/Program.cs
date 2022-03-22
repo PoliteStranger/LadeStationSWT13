@@ -27,8 +27,12 @@ namespace Ladeskab
         {
             IDoor d1 = new Door();
             test t1 = new test(d1);
+            
+            d1.DoorLock();
+            d1.DoorUnLock();
             d1.OnDoorOpen();
             d1.DoorLock();
+
         }
     }
 }
