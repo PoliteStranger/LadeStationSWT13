@@ -24,15 +24,27 @@ namespace Ladeskab
 
         public bool Connected { get; }
 
+        private Display _display;
+        private UsbChargerSimulator _usbCharger;
+
+
+        public ChargeController(Display display, UsbChargerSimulator usbCharger)
+        {
+            Connected = false;
+            _display = display;
+            _usbCharger = usbCharger;
+
+        }
+
         public void StartCharge()
         {
-
+            _usbCharger.StartCharge();
 
         }
 
         public void StopCharge()
         {
-            
+            _usbCharger.StopCharge();
             
         }
 
