@@ -77,8 +77,6 @@ namespace LadeStation.NUnit.test
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
-        
-
         [Test]
         public void DoorEventCheckForUnlockStateEqualsNullReference()
         {
