@@ -52,9 +52,9 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventAfterLockAndUnlockEqualTrue()
         {
-            _uut.DoorLock();
+            _uut.LockDoor();
             _uut.OnDoorOpen();
-            _uut.DoorUnLock();
+            _uut.UnlockDoor();
             _uut.OnDoorOpen();
             Assert.That(_doorOpenCloseEvent.doorOpen, Is.True);
         }
@@ -62,7 +62,7 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventMessageNotReceivedAfterLockedDoor()
         {
-            _uut.DoorLock();
+            _uut.LockDoor();
             _uut.OnDoorOpen();
 
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
@@ -71,7 +71,7 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventUnlockAndCloseEqualNullReference()
         {
-            _uut.DoorUnLock();
+            _uut.UnlockDoor();
             _uut.OnDoorClose();
 
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
@@ -80,7 +80,7 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventCheckForUnlockStateEqualsNullReference()
         {
-            _uut.DoorUnLock();
+            _uut.UnlockDoor();
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
