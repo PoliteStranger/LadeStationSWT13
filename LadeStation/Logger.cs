@@ -8,10 +8,27 @@ namespace Ladeskab
 {
     public interface ILogger
     {
-        public void Log(string logdata);
+        void Log(string logdata);
 
     }
-    internal class Logger
+    public class Logger:ILogger
     {
+        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
+
+        public bool LogWritten { get; set; }
+
+        public Logger()
+        {
+            LogWritten = false;
+        }
+
+        public void Log(string logdata)
+        {
+            using (var writer = File.AppendText(logFile))
+            {
+                writer.WriteLine(DateTime.Now + logdata);
+                LogWritten = true;
+            }
+        }
     }
 }

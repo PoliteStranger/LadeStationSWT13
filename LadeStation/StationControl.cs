@@ -34,8 +34,6 @@ namespace Ladeskab
         private ILogger _logger;
 
 
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
-
         // Her mangler constructor
         public StationControl(IDoor door, IChargeController charger, IDisplay display, IRfidReader reader, ILogger logger)
         {
@@ -75,12 +73,9 @@ namespace Ladeskab
                         _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
-                        //USE WRITER:
+
                         _logger.Log($"Skab låst med RFID: {id}");
-                        //using (var writer = File.AppendText(logFile))
-                        //{
-                        //    writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        //}
+
 
                         _display.DisplayGuideMessage(IDisplay.GuideMessages.Occupied);
                         
@@ -107,10 +102,6 @@ namespace Ladeskab
                         _door.UnlockDoor();
                         //USE LOG CLASS
                         _logger.Log($"Skab låst op med RFID: {id}");
-                        //using (var writer = File.AppendText(logFile))
-                        //{
-                        //    writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        //}
 
 
                         _display.DisplayGuideMessage(IDisplay.GuideMessages.RemovePhone);
@@ -149,7 +140,6 @@ namespace Ladeskab
                 else
                 {
                     //no phone, therefore free
-                    //display "Ladeskabet er ledig"
                     _display.DisplayGuideMessage(IDisplay.GuideMessages.Free);
                 }
             }
