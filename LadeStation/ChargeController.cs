@@ -11,7 +11,7 @@ namespace Ladeskab
 
     public interface IChargeController
     {
-        public bool Connected { get; }
+        public bool Connected { get; set; }
         public void StartCharge();
         public void StopCharge();
 
@@ -21,7 +21,7 @@ namespace Ladeskab
     public class ChargeController : IChargeController
     {
         
-        public bool Connected { get; }
+        public bool Connected { get; set; }
 
         private static IDisplay _display;
         private static IUsbCharger _usbCharger;

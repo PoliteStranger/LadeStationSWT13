@@ -10,18 +10,22 @@ namespace Ladeskab
     public class StationControl
     {
         // Enum med tilstande ("states") svarende til tilstandsdiagrammet for klassen
-        private enum LadeskabState
+        public enum LadeskabState
         {
             Available,
             Locked,
             DoorOpen
         };
 
-        public bool DoorOpen { get; set; }
         
 
         // Her mangler flere member variable
         private LadeskabState _state;
+
+        public LadeskabState State
+        {
+            get { return _state; }
+        }
         private IChargeController _charger;
         private IDisplay _display;          // Vis beskeder på displayet
         private int _oldId;
@@ -40,9 +44,10 @@ namespace Ladeskab
 
             _display = display;
             _reader = reader;
+            _reader.RfidChangedEvent += HandleIncomingRfId;
 
             _logger = logger;
-            //_charger = charger;
+            _charger = charger;
 
             _state = LadeskabState.Available;
 
@@ -50,7 +55,7 @@ namespace Ladeskab
         //Eventhandler for door updates
         private void HandleDoorChangedEvent(object sender, DTDoorOpenCloseEvent e)
         {
-            DoorOpen = e.doorOpen;
+            DoorUpdate(e.doorOpen);
         }
         //eventhandler for RFIDReader
         private void HandleIncomingRfId(object sender, DTRfidReaderEvent e)
@@ -120,9 +125,9 @@ namespace Ladeskab
             }
         }
 
-        private void DoorUpdate(DTDoorOpenCloseEvent doorState)
+        private void DoorUpdate(bool doorState)
         {
-            if (doorState.doorOpen)
+            if (doorState)
             {
                 if (_state == LadeskabState.Available)
                 {
