@@ -44,23 +44,25 @@ namespace Ladeskab
         private IDisplay.GuideMessages _guideStateMessage;
 
         // Getters for tilstanden af display beskederne. Til at displayet kan 
-        public IDisplay.GuideMessages GuideStateMessage
-        {
-            get { return _guideStateMessage; }
-            set
-            {
+
+        public IDisplay.GuideMessages GuideStateMessage 
+        { 
+            get { return _guideStateMessage; } 
+            set 
+            { 
                 _guideStateMessage = value;
                 // Her kunne vi evt "Sende" et event el. lign til selve hardwaredelen af displayet!
             }
         }
-        public IDisplay.ChargeMessages ChargeStateMessage
-        {
-            get { return _chargeStateMessage; }
-            set
-            {
+
+        public IDisplay.ChargeMessages ChargeStateMessage 
+        { 
+            get { return _chargeStateMessage; } 
+            set 
+            { 
                 _chargeStateMessage = value;
                 // Her kunne vi evt "Sende" et event el. lign til selve hardwaredelen af displayet!
-            }
+            } 
         }
 
         // Metoden til at sætte beskeden, samt konsol feedback til test programmet

@@ -18,8 +18,8 @@ namespace Ladeskab
         event EventHandler<DTDoorOpenCloseEvent> DoorChangedEvent;
         public void OnDoorOpen();
         public void OnDoorClose();
-        public void DoorLock();
-        public void DoorUnLock();
+        public void LockDoor();
+        public void UnlockDoor();
     }
 
     public class Door : IDoor
@@ -50,7 +50,6 @@ namespace Ladeskab
                 doorstate = true;
             }
         }
-
         public void OnDoorClose()
         {
             //tjekker om døren er åben i forvejen
@@ -61,8 +60,7 @@ namespace Ladeskab
                 doorstate = false;
             }
         }
-
-        public void DoorLock()
+        public void LockDoor()
         {
             //tjekker om døren er Ulåst
             if (doorstate == false)
@@ -70,8 +68,7 @@ namespace Ladeskab
                 doorlock = true;
             }
         }
-
-        public void DoorUnLock()
+        public void UnlockDoor()
         {
             //tjekker om døren er låst
             if (doorlock == true)
