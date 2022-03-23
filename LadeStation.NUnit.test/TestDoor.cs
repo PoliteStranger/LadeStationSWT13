@@ -16,7 +16,6 @@ namespace LadeStation.NUnit.test
         {
             _doorOpenCloseEvent = null;
             _uut = new Door();
-           
         }
 
         [Test]
