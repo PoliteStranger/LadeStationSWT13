@@ -52,6 +52,7 @@ namespace Ladeskab
 
         private static void HandleCurrentValueEvent(object sender, CurrentEventArgs e)
         {
+            
             //make event to notify display, need help
             if (e.Current <= 500 && e.Current > 5)
             {
@@ -63,6 +64,7 @@ namespace Ladeskab
             }
             else if (e.Current > 500)
             {
+                _usbCharger.StopCharge();
                 _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
             }
             else if (e.Current == 0)

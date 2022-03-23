@@ -36,8 +36,12 @@ namespace LadeStation.NUnit.test
         {
             
             usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
-
-            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+            Assert.Multiple(() =>
+            {
+                usbChargerSimulator.Received().StopCharge();
+                display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+            });
+            
         }
 
         [Test]
