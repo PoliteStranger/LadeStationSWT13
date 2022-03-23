@@ -23,15 +23,17 @@ namespace Ladeskab
         
         public bool Connected { get; set; }
 
-        private static Display _display;
-        private static UsbChargerSimulator _usbCharger;
+        private static IDisplay _display;
+        private static IUsbCharger _usbCharger;
 
 
-        public ChargeController(Display display, UsbChargerSimulator usbCharger)
+        public ChargeController(IDisplay display, IUsbCharger usbCharger)
         {
             _display = display;
             _usbCharger = usbCharger;
             Connected = usbCharger.Connected;
+            _usbCharger.CurrentValueEvent += HandleCurrentValueEvent;
+
         }
 
         public void StartCharge()
@@ -52,7 +54,7 @@ namespace Ladeskab
         {
             //make event to notify display, need help
 
-            switch (_usbCharger.CurrentValue)
+            switch (e.Current)
             {
                 case 500:
                     _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);

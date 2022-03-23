@@ -21,6 +21,7 @@ namespace UsbSimulator
 
         // Start charging
         void StartCharge();
+
         // Stop charging
         void StopCharge();
     }
