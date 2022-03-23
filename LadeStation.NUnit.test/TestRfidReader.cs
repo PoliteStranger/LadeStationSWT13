@@ -31,6 +31,14 @@ namespace LadeStation.NUnit.test
         }
 
         [Test]
+        public void RfidEventNobodyIslisting()
+        {
+            int id = 20;
+            _uut.RfidDetected(id);
+            Assert.That(() => _dtRfidReaderEvent.RfidId, Is.EqualTo(20));
+        }
+
+        [Test]
         public void RfidEventIdMinus20_equalsNull()
         {
             _uut.RfidChangedEvent += (o, args)
