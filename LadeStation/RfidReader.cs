@@ -18,7 +18,7 @@ namespace Ladeskab
         public void RfidDetected(int id);
     }
 
-    public class RficReader : IRfidReader
+    public class RfidReader : IRfidReader
     {
         public event EventHandler<DTRfidReaderEvent> RfidChangedEvent;
         public void RfidDetected(int id)

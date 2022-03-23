@@ -50,7 +50,6 @@ namespace Ladeskab
                 doorstate = true;
             }
         }
-
         public void OnDoorClose()
         {
             //tjekker om døren er åben i forvejen
@@ -61,7 +60,6 @@ namespace Ladeskab
                 doorstate = false;
             }
         }
-
         public void LockDoor()
         {
             //tjekker om døren er Ulåst
@@ -70,7 +68,6 @@ namespace Ladeskab
                 doorlock = true;
             }
         }
-
         public void UnlockDoor()
         {
             //tjekker om døren er låst
