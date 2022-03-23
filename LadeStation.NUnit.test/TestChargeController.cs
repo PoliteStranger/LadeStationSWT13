@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Ladeskab;
+using NSubstitute;
 using NUnit.Framework;
 using UsbSimulator;
 
@@ -19,8 +20,8 @@ namespace LadeStation.NUnit.test
         [SetUp]
         public void Setup()
         {
-            display = new Display();
-            usbChargerSimulator = new UsbChargerSimulator();
+            display = Substitute.For<Display>();
+            usbChargerSimulator = Substitute.For<UsbChargerSimulator>();
             _uut = new ChargeController(display, usbChargerSimulator);
         }
 
@@ -30,6 +31,20 @@ namespace LadeStation.NUnit.test
 
 
         //}
+        [Test]
+        public void TestStartCharge()
+        {
+            _uut.StartCharge();
+            usbChargerSimulator.Received(1).StartCharge();
+        }
+
+        [Test]
+        public void TestStopCharge()
+        {
+            _uut.StartCharge();
+            usbChargerSimulator.Received(1).StopCharge();
+        }
+
 
 
 
