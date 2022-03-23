@@ -121,12 +121,13 @@ namespace Ladeskab
             if (doorState)
             {
                 //change to door open state
-                _state = LadeskabState.DoorOpen;
+
                 if (_state == LadeskabState.Available)
                 {
                     //display "Tilslut telefon"
                     _display.DisplayGuideMessage(IDisplay.GuideMessages.ConnectPhone);
                 }
+                _state = LadeskabState.DoorOpen;
             }
             else
             {
