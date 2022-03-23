@@ -20,12 +20,11 @@ namespace Ladeskab
 
     public class ChargeController
     {
-        public event EventHandler<CurrentEventArgs> CurrentValueToDisplayEvent;
-
+        
         public bool Connected { get; }
 
-        private Display _display;
-        private UsbChargerSimulator _usbCharger;
+        private static Display _display;
+        private static UsbChargerSimulator _usbCharger;
 
 
         public ChargeController(Display display, UsbChargerSimulator usbCharger)
@@ -53,6 +52,23 @@ namespace Ladeskab
         private static void CurrentValueEvent(object sender, CurrentEventArgs e)
         {
             //make event to notify display, need help
+
+            switch (_usbCharger.CurrentValue)
+            {
+                case 500:
+                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
+                    break;
+                case 750:
+                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+                    break;
+                case 0.0:
+                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
+                    break;
+                case 2.5:
+                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
+                    break;
+            }
+
 
 
 
