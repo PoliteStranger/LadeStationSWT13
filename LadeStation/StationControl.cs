@@ -56,7 +56,6 @@ namespace Ladeskab
         private void HandleIncomingRfId(object sender, DTRfidReaderEvent e)
         {
             RfidDetected(e.RfidId);
-
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen

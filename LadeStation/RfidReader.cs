@@ -23,7 +23,10 @@ namespace Ladeskab
         public event EventHandler<DTRfidReaderEvent> RfidChangedEvent;
         public void RfidDetected(int id)
         {
-            OnRfidChangedEvent(new DTRfidReaderEvent { RfidId = id });
+            if (id >= 0)
+            {
+                OnRfidChangedEvent(new DTRfidReaderEvent { RfidId = id });
+            }
         }
 
         protected virtual void OnRfidChangedEvent(DTRfidReaderEvent e)

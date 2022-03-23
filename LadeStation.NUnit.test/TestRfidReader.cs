@@ -1,5 +1,6 @@
 using System;
 using Ladeskab;
+using NSubstitute.ReceivedExtensions;
 using NuGet.Frameworks;
 using NUnit.Framework;
 
@@ -19,13 +20,21 @@ namespace LadeStation.NUnit.test
             _uut.RfidChangedEvent += (o, args) 
                 => { _dtRfidReaderEvent = args; };
         }
-
+        
         [Test]
         public void RfidEventId20_equals20()
         {
             int id = 20;
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Is.EqualTo(20));
+        }
+
+        [Test]
+        public void RfidEventIdMinus20_equals20()
+        {
+            int id = -20;
+            _uut.RfidDetected(id);
+            Assert.That(() => _dtRfidReaderEvent.RfidId, Throws.TypeOf<NullReferenceException>());
         }
 
     }
