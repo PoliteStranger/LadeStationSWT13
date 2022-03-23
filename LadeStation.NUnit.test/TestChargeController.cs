@@ -19,28 +19,29 @@ namespace LadeStation.NUnit.test
                         
             usbChargerSimulator = Substitute.For<IUsbCharger>();
 
-
             _uut = new ChargeController(display, usbChargerSimulator);
         }
 
-        [Test]
-        public void TestHandleCurrentValueEventCharging()
+        [TestCase(5.1)]
+        [TestCase(500)]
+        public void TestHandleCurrentValueEventCharging(double current)
         {
-            
-            //usbChargerSimulator.Connected.Returns(true);
-            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs(){Current = 450});
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs(){Current = current });
 
             display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
         }
 
-        [Test]
-        public void TestHandleCurrentValueEventOverload()
+        [TestCase(500.1)]
+        public void TestHandleCurrentValueEventOverload(double current)
         {
             
-            //usbChargerSimulator.Connected.Returns(true);
-            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = 750 });
-
-            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+            Assert.Multiple(() =>
+            {
+                usbChargerSimulator.Received().StopCharge();
+                display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+            });
+            
         }
 
         [Test]
@@ -53,12 +54,11 @@ namespace LadeStation.NUnit.test
             display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
         }
 
-        [Test]
-        public void TestHandleCurrentValueEventFullCharge()
+        [TestCase(0.1)]
+        [TestCase(5)]
+        public void TestHandleCurrentValueEventFullCharge(double current)
         {
-
-            usbChargerSimulator.Connected.Returns(false);
-            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = 2.5 });
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
 
             display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
         }

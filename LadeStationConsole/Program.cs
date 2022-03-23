@@ -1,14 +1,22 @@
 ﻿    using Ladeskab;
+    using UsbSimulator;
 
     class Program
     {
         static void Main(string[] args)
         {
 				// Assemble your system here from all the classes
+                IDoor door = new Door();
+                IDisplay display = new Display();
+                IRfidReader rfidReader = new RfidReader();
+                IUsbCharger usbcharger = new UsbChargerSimulator();
+                IChargeController charger = new ChargeController(display, usbcharger);
+                ILogger logger = new Logger();
+                StationControl s1 = new StationControl(door, charger, display, rfidReader, logger);
+                bool finish = false;
 
-            bool finish = false;
-            do
-            {
+                do
+                {
                 string input;
                 System.Console.WriteLine("Indtast E, O, C, R: ");
                 input = Console.ReadLine();
@@ -21,11 +29,11 @@
                         break;
 
                     case 'O':
-                        //door.OnDoorOpen();
+                        door.OnDoorOpen();
                         break;
 
                     case 'C':
-                        //door.OnDoorClose();
+                        door.OnDoorClose();
                         break;
 
                     case 'R':
@@ -33,7 +41,7 @@
                         string idString = System.Console.ReadLine();
 
                         int id = Convert.ToInt32(idString);
-                        //rfidReader.OnRfidRead(id);
+                        rfidReader.RfidDetected(id);
                         break;
 
                     default:
