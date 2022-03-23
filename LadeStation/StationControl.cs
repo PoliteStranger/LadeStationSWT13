@@ -120,20 +120,20 @@ namespace Ladeskab
         {
             if (doorState)
             {
+                //change to door open state
+                _state = LadeskabState.DoorOpen;
                 if (_state == LadeskabState.Available)
                 {
                     //display "Tilslut telefon"
                     _display.DisplayGuideMessage(IDisplay.GuideMessages.ConnectPhone);
                 }
-                else
-                {
-                    //display error
-                }
             }
             else
             {
+                _state = LadeskabState.Available;
                 if (_charger.Connected)
                 {
+                    _display.DisplayGuideMessage(IDisplay.GuideMessages.ReadRFID);
                     //display "Indlæs RFID"
 
                 }
