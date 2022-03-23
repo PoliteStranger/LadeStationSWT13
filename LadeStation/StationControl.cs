@@ -44,6 +44,8 @@ namespace Ladeskab
             _logger = logger;
             _charger = charger;
 
+            _state = LadeskabState.Available;
+
         }
         //Eventhandler for door updates
         private void HandleDoorChangedEvent(object sender, DTDoorOpenCloseEvent e)
@@ -115,6 +117,27 @@ namespace Ladeskab
             }
         }
 
-        // Her mangler de andre trigger handlere
+        private void DoorUpdate(DTDoorOpenCloseEvent doorState)
+        {
+            if (doorState.doorOpen)
+            {
+                if (_state == LadeskabState.Available)
+                {
+                    //display "Tilslut telefon"
+                }
+                else
+                {
+                    //display error
+                }
+            }
+            else
+            {
+                if (_charger.Connected)
+                {
+                    //display "Indlæs RFID"
+                }
+            }
+        }
+
     }
 }
