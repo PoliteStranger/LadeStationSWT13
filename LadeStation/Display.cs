@@ -34,7 +34,7 @@ namespace Ladeskab
         void DisplayGuideMessage(GuideMessages message);
 
         // Til at afvikle Charge beskeder:
-        void DisplayChargeMessage(ChargeMessages message);
+            void DisplayChargeMessage(ChargeMessages message);
     }
 
     public class Display : IDisplay
