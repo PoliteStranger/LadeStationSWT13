@@ -20,7 +20,7 @@ namespace LadeStation.NUnit.test
         [Test] 
         public void DoorCloseEventNobodyListing()
         {
-            _uut.OnDoorClose();
+            _uut.OnDoorOpen();
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
