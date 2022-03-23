@@ -23,7 +23,7 @@ namespace Ladeskab
         // Her mangler flere member variable
         private LadeskabState _state;
         private IChargeControl _charger;
-        private IDisplay _display;          // Vis beskeder på displayet
+        private Display _display;
         private int _oldId;
         private IDoor _door;
         private IRfidReader _reader;
@@ -55,7 +55,8 @@ namespace Ladeskab
         //eventhandler for RFIDReader
         private void HandleIncomingRfId(object sender, RfidUpdateArgs e)
         {
-            RfidDetected(e.Id);
+            RfidDetected(e.RfidId);
+
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -77,13 +78,15 @@ namespace Ladeskab
                         //    writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         //}
 
-                        _display.DisplayMessage("Skabet er låst og din telefon lades. Brug dit RFID tag til at låse op.");
+                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
+                        
 
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        _display.DisplayMessage("Din telefon er ikke ordentlig tilsluttet. Prøv igen.");
+                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+                        
                     }
 
                     break;
@@ -105,12 +108,13 @@ namespace Ladeskab
                         //    writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
                         //}
 
-                        _display.DisplayMessage("Tag din telefon ud af skabet og luk døren");
+
+                        _display.DisplayGuideMessage(IDisplay.GuideMessages.RemovePhone);
                         _state = LadeskabState.Available;
                     }
                     else
                     {
-                        _display.DisplayMessage("Forkert RFID tag");
+                        _display.DisplayGuideMessage(IDisplay.GuideMessages.RFIDError);
                     }
 
                     break;

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,18 +6,30 @@ using System.Threading.Tasks;
 
 namespace Ladeskab
 {
-    public class RfidUpdateArgs : EventArgs
+    public class DTRfidReaderEvent : EventArgs
     {
-        public int Id { get; set; }
+        //Dette er lige som "argumentet man sender med i ens eventhandler"
+        public int RfidId { get; set; }
     }
 
     public interface IRfidReader
     {
-        event EventHandler<RfidUpdateArgs> RfidUpdateEvent;
+        event EventHandler<DTRfidReaderEvent> RfidChangedEvent;
+        public void RfidDetected(int id);
     }
 
-    internal class RfidReader
+    public class RfidReader : IRfidReader
     {
+        public event EventHandler<DTRfidReaderEvent> RfidChangedEvent;
+        public void RfidDetected(int id)
+        {
+            OnRfidChangedEvent(new DTRfidReaderEvent { RfidId = id });
+        }
 
+        protected virtual void OnRfidChangedEvent(DTRfidReaderEvent e)
+        {
+            RfidChangedEvent?.Invoke(this, e);
+        }
     }
+   
 }
