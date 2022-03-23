@@ -53,23 +53,26 @@ namespace Ladeskab
         private static void HandleCurrentValueEvent(object sender, CurrentEventArgs e)
         {
             //make event to notify display, need help
-
-            switch (e.Current)
+            if (e.Current <= 500 && e.Current > 5)
             {
-                case 500:
-                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
-                    break;
-                case 750:
-                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
-                    break;
-                case 0.0:
-                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
-                    break;
-                case 2.5:
-                    _display.DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
-                    break;
+                _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
             }
+            else
+            {
+                switch (e.Current)
+                {
 
+                    case 750:
+                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+                        break;
+                    case 0.0:
+                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
+                        break;
+                    case 2.5:
+                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
+                        break;
+                }
+            }
 
 
 

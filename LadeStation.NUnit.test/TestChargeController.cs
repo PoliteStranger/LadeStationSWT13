@@ -24,18 +24,44 @@ namespace LadeStation.NUnit.test
         }
 
         [Test]
-        public void TestHandleCurrentValueEvent(/*double current*/)
+        public void TestHandleCurrentValueEventCharging()
         {
-            //make event to notify display, need help
-            //raise event with
+            
+            //usbChargerSimulator.Connected.Returns(true);
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs(){Current = 450});
 
-
-
-
-
-            Assert.That(true);
+            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
         }
 
+        [Test]
+        public void TestHandleCurrentValueEventOverload()
+        {
+            
+            //usbChargerSimulator.Connected.Returns(true);
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = 750 });
+
+            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+        }
+
+        [Test]
+        public void TestHandleCurrentValueEventNoConn()
+        {
+            
+            usbChargerSimulator.Connected.Returns(false);
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = usbChargerSimulator.CurrentValue });
+
+            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
+        }
+
+        [Test]
+        public void TestHandleCurrentValueEventFullCharge()
+        {
+
+            usbChargerSimulator.Connected.Returns(false);
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = 2.5 });
+
+            display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
+        }
 
         [Test]
         public void TestStartCharge()
