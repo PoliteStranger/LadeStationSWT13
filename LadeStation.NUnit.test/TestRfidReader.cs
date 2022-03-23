@@ -11,7 +11,6 @@ namespace LadeStation.NUnit.test
         private RfidReader _uut;
         private Ladeskab.DTRfidReaderEvent _dtRfidReaderEvent;
 
-
         [SetUp]
         public void Setup()
         {
