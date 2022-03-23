@@ -53,7 +53,7 @@ namespace Ladeskab
             DoorOpen = e.doorOpen;
         }
         //eventhandler for RFIDReader
-        private void HandleIncomingRfId(object sender, RfidUpdateArgs e)
+        private void HandleIncomingRfId(object sender, DTRfidReaderEvent e)
         {
             RfidDetected(e.RfidId);
 
@@ -68,7 +68,7 @@ namespace Ladeskab
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
-                        _door.DoorLock();
+                        _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
                         //USE WRITER:
@@ -100,7 +100,7 @@ namespace Ladeskab
                     if (id == _oldId)
                     {
                         _charger.StopCharge();
-                        _door.DoorUnLock();
+                        _door.UnlockDoor();
                         //USE LOG CLASS
                         _logger.Log($"Skab låst op med RFID: {id}");
                         //using (var writer = File.AppendText(logFile))
