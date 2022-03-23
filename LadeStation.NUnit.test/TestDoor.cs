@@ -10,12 +10,18 @@ namespace LadeStation.NUnit.test
         private Door _uut;
         private Ladeskab.DTDoorOpenCloseEvent _doorOpenCloseEvent;
 
-
         [SetUp]
         public void Setup()
         {
             _doorOpenCloseEvent = null;
             _uut = new Door();
+        }
+
+        [Test] 
+        public void DoorCloseEventNobodyListing()
+        {
+            _uut.OnDoorClose();
+            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
         [Test]
@@ -95,13 +101,6 @@ namespace LadeStation.NUnit.test
             _uut.DoorChangedEvent += (o, args)
                 => { _doorOpenCloseEvent = args; };
             _uut.UnlockDoor();
-            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
-        }
-
-        [Test]
-        public void DoorCloseEventNobodyListing()
-        {
-            _uut.OnDoorClose();
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
     }
