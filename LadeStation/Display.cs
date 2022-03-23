@@ -44,7 +44,9 @@ namespace Ladeskab
         private IDisplay.GuideMessages _guideStateMessage;
 
         // Getters for tilstanden af display beskederne. Til at displayet kan 
-        public IDisplay.GuideMessages GuideStateMessage { 
+
+        public IDisplay.GuideMessages GuideStateMessage 
+        { 
             get { return _guideStateMessage; } 
             set 
             { 
@@ -52,7 +54,9 @@ namespace Ladeskab
                 // Her kunne vi evt "Sende" et event el. lign til selve hardwaredelen af displayet!
             }
         }
-        public IDisplay.ChargeMessages ChargeStateMessage { 
+
+        public IDisplay.ChargeMessages ChargeStateMessage 
+        { 
             get { return _chargeStateMessage; } 
             set 
             { 
