@@ -33,7 +33,7 @@ namespace Ladeskab
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
-        public StationControl(IDoor door, IChargeControl charger, IDisplay display, IRfidReader reader, ILogger logger)
+        public StationControl(IDoor door, IChargeController charger, IDisplay display, IRfidReader reader, ILogger logger)
         {
             _door = door;
             door.DoorChangedEvent += HandleDoorChangedEvent;
@@ -78,14 +78,14 @@ namespace Ladeskab
                         //    writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
                         //}
 
-                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
+                        _display.DisplayGuideMessage(IDisplay.GuideMessages.Occupied);
                         
 
                         _state = LadeskabState.Locked;
                     }
                     else
                     {
-                        _display.DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+                        _display.DisplayGuideMessage(IDisplay.GuideMessages.ConnError);
                         
                     }
 
@@ -128,6 +128,7 @@ namespace Ladeskab
                 if (_state == LadeskabState.Available)
                 {
                     //display "Tilslut telefon"
+                    _display.DisplayGuideMessage(IDisplay.GuideMessages.ConnectPhone);
                 }
                 else
                 {
@@ -139,6 +140,13 @@ namespace Ladeskab
                 if (_charger.Connected)
                 {
                     //display "Indlæs RFID"
+
+                }
+                else
+                {
+                    //no phone, therefore free
+                    //display "Ladeskabet er ledig"
+                    _display.DisplayGuideMessage(IDisplay.GuideMessages.Free);
                 }
             }
         }
