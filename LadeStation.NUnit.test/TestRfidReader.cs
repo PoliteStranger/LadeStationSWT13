@@ -47,5 +47,17 @@ namespace LadeStation.NUnit.test
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Throws.TypeOf<NullReferenceException>());
         }
+
+        [Test]
+        public void RfidEventId20ButChangedTo10_equals10()
+        {
+            _uut.RfidChangedEvent += (o, args)
+                => { _dtRfidReaderEvent = args; };
+            int id = 20;
+            id = 10;
+            _uut.RfidDetected(id);
+            Assert.That(() => _dtRfidReaderEvent.RfidId, Is.EqualTo(10));
+        }
+
     }
 }
