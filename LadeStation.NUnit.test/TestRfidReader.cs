@@ -47,15 +47,5 @@ namespace LadeStation.NUnit.test
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Throws.TypeOf<NullReferenceException>());
         }
-
-
-        /*
-        [Test]
-        public void ctor_CurentValueIsZero()
-        {
-            Assert.That(_dtRfidReaderEvent.RfidId, Is.Zero);
-        }
-        */
-
     }
 }

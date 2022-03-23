@@ -16,13 +16,14 @@ namespace LadeStation.NUnit.test
         {
             _doorOpenCloseEvent = null;
             _uut = new Door();
-            _uut.DoorChangedEvent += (o, args)
-                => { _doorOpenCloseEvent = args; };
+           
         }
 
         [Test]
         public void DoorEventNotNull()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.OnDoorOpen();
             Assert.That(_doorOpenCloseEvent, Is.Not.Null);
         }
@@ -30,6 +31,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventDoorOpenEqualTrue()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.OnDoorOpen();
             Assert.That(_doorOpenCloseEvent.doorOpen, Is.True);
         }
@@ -37,6 +40,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventDoorOpenCloseEqualFalse()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.OnDoorOpen();
             _uut.OnDoorClose();
             Assert.That(_doorOpenCloseEvent.doorOpen, Is.False);
@@ -45,6 +50,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventCheckCloseDefaultPositionEqualsNullReference()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.OnDoorClose();
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
@@ -52,6 +59,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventAfterLockAndUnlockEqualTrue()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.LockDoor();
             _uut.OnDoorOpen();
             _uut.UnlockDoor();
@@ -62,6 +71,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventMessageNotReceivedAfterLockedDoor()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.LockDoor();
             _uut.OnDoorOpen();
 
@@ -71,6 +82,8 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventUnlockAndCloseEqualNullReference()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.UnlockDoor();
             _uut.OnDoorClose();
 
@@ -80,14 +93,17 @@ namespace LadeStation.NUnit.test
         [Test]
         public void DoorEventCheckForUnlockStateEqualsNullReference()
         {
+            _uut.DoorChangedEvent += (o, args)
+                => { _doorOpenCloseEvent = args; };
             _uut.UnlockDoor();
             Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
 
         [Test]
-        public void DoorCloseEventIsNull()
+        public void DoorCloseEventNobodyListing()
         {
-            Assert.That(_doorOpenCloseEvent, Is.Null);
+            _uut.OnDoorClose();
+            Assert.That(() => _doorOpenCloseEvent.doorOpen, Throws.TypeOf<NullReferenceException>());
         }
     }
 }
