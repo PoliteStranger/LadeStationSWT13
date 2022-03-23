@@ -33,7 +33,7 @@ namespace Ladeskab
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
-        public StationControl(IDoor door, IChargeControl charger, IDisplay display, IRfidReader reader, ILogger logger)
+        public StationControl(IDoor door, IChargeController charger, IDisplay display, IRfidReader reader, ILogger logger)
         {
             _door = door;
             door.DoorChangedEvent += HandleDoorChangedEvent;
@@ -68,7 +68,7 @@ namespace Ladeskab
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
-                        _door.DoorLock();
+                        _door.LockDoor();
                         _charger.StartCharge();
                         _oldId = id;
                         //USE WRITER:
@@ -100,7 +100,7 @@ namespace Ladeskab
                     if (id == _oldId)
                     {
                         _charger.StopCharge();
-                        _door.DoorUnLock();
+                        _door.UnlockDoor();
                         //USE LOG CLASS
                         _logger.Log($"Skab låst op med RFID: {id}");
                         //using (var writer = File.AppendText(logFile))
