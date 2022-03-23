@@ -80,7 +80,6 @@ namespace Ladeskab
         protected virtual void DoorStateChanged(DTDoorOpenCloseEvent e)
         {
             DoorChangedEvent?.Invoke(this, e);
-            //DoorChangedEvent?.Invoke(this, new DTDoorOpenCloseEvent() { doorOpen = this.doorstate });
         }
     }
 
