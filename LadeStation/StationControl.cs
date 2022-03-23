@@ -18,7 +18,6 @@ namespace Ladeskab
         };
 
         
-
         // Her mangler flere member variable
         private LadeskabState _state;
 
@@ -32,7 +31,6 @@ namespace Ladeskab
         private IDoor _door;
         private IRfidReader _reader;
         private ILogger _logger;
-
 
         // Her mangler constructor
         public StationControl(IDoor door, IChargeController charger, IDisplay display, IRfidReader reader, ILogger logger)
