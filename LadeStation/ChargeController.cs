@@ -48,7 +48,7 @@ namespace Ladeskab
 
 
 
-        private static void CurrentValueEvent(object sender, CurrentEventArgs e)
+        private static void HandleCurrentValueEvent(object sender, CurrentEventArgs e)
         {
             //make event to notify display, need help
 

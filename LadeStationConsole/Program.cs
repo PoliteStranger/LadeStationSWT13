@@ -1,4 +1,6 @@
-﻿    class Program
+﻿    using Ladeskab;
+
+    class Program
     {
         static void Main(string[] args)
         {
