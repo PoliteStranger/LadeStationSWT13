@@ -24,7 +24,7 @@ namespace LadeStation.NUnit.test
         }
 
         [Test]
-        public void TestHandleCurrentValueEvent(double current)
+        public void TestHandleCurrentValueEvent(/*double current*/)
         {
             //make event to notify display, need help
             //raise event with
@@ -33,7 +33,7 @@ namespace LadeStation.NUnit.test
 
 
 
-
+            Assert.That(true);
         }
 
 
