@@ -17,13 +17,14 @@ namespace LadeStation.NUnit.test
         {
             _dtRfidReaderEvent = null;
             _uut = new RfidReader();
-            _uut.RfidChangedEvent += (o, args) 
-                => { _dtRfidReaderEvent = args; };
         }
         
         [Test]
         public void RfidEventId20_equals20()
         {
+            _uut.RfidChangedEvent += (o, args)
+                => { _dtRfidReaderEvent = args; };
+
             int id = 20;
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Is.EqualTo(20));
@@ -32,10 +33,14 @@ namespace LadeStation.NUnit.test
         [Test]
         public void RfidEventIdMinus20_equalsNull()
         {
+            _uut.RfidChangedEvent += (o, args)
+                => { _dtRfidReaderEvent = args; };
             int id = -20;
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Throws.TypeOf<NullReferenceException>());
         }
+
+
         /*
         [Test]
         public void ctor_CurentValueIsZero()
