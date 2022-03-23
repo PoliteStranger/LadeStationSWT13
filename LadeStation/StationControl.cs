@@ -17,20 +17,46 @@ namespace Ladeskab
             DoorOpen
         };
 
+        public bool DoorOpen { get; set; }
+        
+
         // Her mangler flere member variable
         private LadeskabState _state;
         private IChargeControl _charger;
         private Display _display;
         private int _oldId;
         private IDoor _door;
-        
+        private IRfidReader _reader;
+        private ILogger _logger;
+
+
         private string logFile = "logfile.txt"; // Navnet på systemets log-fil
 
         // Her mangler constructor
-        public StationControl(Display display)
+        public StationControl(IDoor door, IChargeControl charger, IDisplay display, IRfidReader reader, ILogger logger)
         {
-            // Dependency injection af Display objektet!
+            _door = door;
+            door.DoorChangedEvent += HandleDoorChangedEvent;
+
             _display = display;
+            _reader = reader;
+
+            _logger = logger;
+            _charger = charger;
+
+            _state = LadeskabState.Available;
+
+        }
+        //Eventhandler for door updates
+        private void HandleDoorChangedEvent(object sender, DTDoorOpenCloseEvent e)
+        {
+            DoorOpen = e.doorOpen;
+        }
+        //eventhandler for RFIDReader
+        private void HandleIncomingRfId(object sender, RfidUpdateArgs e)
+        {
+            RfidDetected(e.RfidId);
+
         }
 
         // Eksempel på event handler for eventet "RFID Detected" fra tilstandsdiagrammet for klassen
@@ -42,14 +68,15 @@ namespace Ladeskab
                     // Check for ladeforbindelse
                     if (_charger.Connected)
                     {
-
-                        _door.LockDoor();
+                        _door.DoorLock();
                         _charger.StartCharge();
                         _oldId = id;
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
-                        }
+                        //USE WRITER:
+                        _logger.Log($"Skab låst med RFID: {id}");
+                        //using (var writer = File.AppendText(logFile))
+                        //{
+                        //    writer.WriteLine(DateTime.Now + ": Skab låst med RFID: {0}", id);
+                        //}
 
                         _display.DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
                         
@@ -73,11 +100,13 @@ namespace Ladeskab
                     if (id == _oldId)
                     {
                         _charger.StopCharge();
-                        _door.UnlockDoor();
-                        using (var writer = File.AppendText(logFile))
-                        {
-                            writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
-                        }
+                        _door.DoorUnLock();
+                        //USE LOG CLASS
+                        _logger.Log($"Skab låst op med RFID: {id}");
+                        //using (var writer = File.AppendText(logFile))
+                        //{
+                        //    writer.WriteLine(DateTime.Now + ": Skab låst op med RFID: {0}", id);
+                        //}
 
 
                         _display.DisplayGuideMessage(IDisplay.GuideMessages.RemovePhone);
@@ -92,6 +121,27 @@ namespace Ladeskab
             }
         }
 
-        // Her mangler de andre trigger handlere
+        private void DoorUpdate(DTDoorOpenCloseEvent doorState)
+        {
+            if (doorState.doorOpen)
+            {
+                if (_state == LadeskabState.Available)
+                {
+                    //display "Tilslut telefon"
+                }
+                else
+                {
+                    //display error
+                }
+            }
+            else
+            {
+                if (_charger.Connected)
+                {
+                    //display "Indlæs RFID"
+                }
+            }
+        }
+
     }
 }
