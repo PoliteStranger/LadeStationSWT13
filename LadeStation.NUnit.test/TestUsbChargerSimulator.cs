@@ -17,13 +17,13 @@ namespace UsbSimulator.Test
         {
             _uut = new UsbChargerSimulator();
         }
-
+        
         [Test]
         public void ctor_IsConnected()
         {
             Assert.That(_uut.Connected, Is.True);
         }
-
+        
         [Test]
         public void ctor_CurentValueIsZero()
         {

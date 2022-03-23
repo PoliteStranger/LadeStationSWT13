@@ -29,12 +29,20 @@ namespace LadeStation.NUnit.test
             Assert.That(() => _dtRfidReaderEvent.RfidId, Is.EqualTo(20));
         }
 
+
+
         [Test]
         public void RfidEventIdMinus20_equals20()
         {
             int id = -20;
             _uut.RfidDetected(id);
             Assert.That(() => _dtRfidReaderEvent.RfidId, Throws.TypeOf<NullReferenceException>());
+        }
+
+        [Test]
+        public void ctor_CurentValueIsZero()
+        {
+            Assert.That(_dtRfidReaderEvent.RfidId, Is.Zero);
         }
 
     }
