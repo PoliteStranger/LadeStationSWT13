@@ -18,7 +18,7 @@ namespace Ladeskab
 
     }
 
-    public class ChargeController
+    public class ChargeController : IChargeController
     {
         
         public bool Connected { get; }
@@ -29,10 +29,9 @@ namespace Ladeskab
 
         public ChargeController(Display display, UsbChargerSimulator usbCharger)
         {
-            Connected = false;
             _display = display;
             _usbCharger = usbCharger;
-
+            Connected = usbCharger.Connected;
         }
 
         public void StartCharge()
