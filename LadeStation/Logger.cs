@@ -13,12 +13,14 @@ namespace Ladeskab
     }
     public class Logger:ILogger
     {
-        private string logFile = "logfile.txt"; // Navnet på systemets log-fil
+        // Navnet på systemets log-fil
+        private string logFile = "logfile.txt"; 
 
         public bool LogWritten { get; set; }
 
         public Logger()
         {
+            // Kun til test:
             LogWritten = false;
         }
 
@@ -27,6 +29,8 @@ namespace Ladeskab
             using (var writer = File.AppendText(logFile))
             {
                 writer.WriteLine(DateTime.Now + logdata);
+                
+                // Kun til test
                 LogWritten = true;
             }
         }
