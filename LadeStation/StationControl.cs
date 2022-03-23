@@ -42,7 +42,7 @@ namespace Ladeskab
             _reader = reader;
 
             _logger = logger;
-            _charger = charger;
+            //_charger = charger;
 
             _state = LadeskabState.Available;
 
