@@ -22,8 +22,8 @@ namespace Ladeskab
 
         // Her mangler flere member variable
         private LadeskabState _state;
-        private IChargeControl _charger;
-        private Display _display;
+        private IChargeController _charger;
+        private IDisplay _display;          // Vis beskeder på displayet
         private int _oldId;
         private IDoor _door;
         private IRfidReader _reader;
