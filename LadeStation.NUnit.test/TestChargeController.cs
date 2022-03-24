@@ -63,6 +63,24 @@ namespace LadeStation.NUnit.test
             display.Received().DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
         }
 
+        [TestCase(-1)]
+        public void TestHandleCurrentValueEventNegativeCharge(double current)
+        {
+            usbChargerSimulator.CurrentValueEvent += Raise.EventWith(new CurrentEventArgs() { Current = current });
+
+
+            Assert.Multiple(() =>
+            {
+                display.DidNotReceive().DisplayChargeMessage(IDisplay.ChargeMessages.Charging);
+                display.DidNotReceive().DisplayChargeMessage(IDisplay.ChargeMessages.NoConn);
+                display.DidNotReceive().DisplayChargeMessage(IDisplay.ChargeMessages.FullCharge);
+                display.DidNotReceive().DisplayChargeMessage(IDisplay.ChargeMessages.ChargeError);
+            });
+            
+        }
+
+
+
         [Test]
         public void TestStartCharge()
         {
